@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Cartoon - CISC 3610</title>
+    <style>
+        body {
+            display: flex;           /* Turns on Flexbox layout so we can center children easily */
+            flex-direction: column;  /* Stacks children vertically (title on top, canvas below) */
+            align-items: center;     /* Centers every child element horizontally on the page */
+            background: #1a1a1a;     /* Sets the page background to a dark charcoal color */
+            color: #eee;             /* Sets the default text color to off-white */
+            font-family: sans-serif; /* Uses a clean, modern font for all page text */
+            padding-top: 30px;       /* Adds 30px of breathing room at the very top of the page */
+        }
+        canvas {
+            border: 2px solid #555;                    /* Draws a thin dark-grey border around the canvas edge */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Adds a soft drop-shadow to make the canvas look raised */
+        }
+        a {
+            color: #7ad;        /* Sets the link color to a soft blue */
+            margin-top: 16px;   /* Pushes the link 16px below the canvas */
+            font-size: 1.1em;   /* Makes the link text slightly larger than the default size */
+        }
+    </style>
+</head>
+<body>
+    <h2>My Cartoon</h2>
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <a href="https://github.com/mgradov">Return to Portfolio</a>
+
+    <script>
+    "use strict"; // Tells the browser to use strict mode, which catches common coding mistakes early
+
+    /*
+     * BLOCK: Game Namespace Object
+     * ----------------------------
+     * We create a single object called "Game" to act as a container for all
+     * of our variables and functions. This keeps everything organized in one
+     * place and prevents our variable names from accidentally clashing with
+     * other scripts on the page.
+     */
+    var Game = {                       // Declares a variable called Game and assigns an object to it
+        canvas        : undefined,     // Reserves a slot for the canvas element; we'll fill it in Game.start
+        canvasContext : undefined      // Reserves a slot for the drawing context; we'll fill it in Game.start
+    };
+
+    /*
+     * BLOCK: Game.start — Entry Point
+     * --------------------------------
+     * This function is the very first thing that runs when the page is ready.
+     * Its job is to (1) find the canvas element in the HTML, (2) get the
+     * drawing tool ("2d context") from it, and (3) kick off the main loop
+     * after a short delay so the page has time to fully load.
+     */
+    Game.start = function () {
+        Game.canvas        = document.getElementById("myCanvas"); // Finds the <canvas> tag in the HTML by its id and stores it in Game.canvas
+        Game.canvasContext = Game.canvas.getContext("2d");         // Gets the 2D drawing tool from the canvas and stores it in Game.canvasContext
+        window.setTimeout(Game.mainLoop, 500);                     // Waits 500 milliseconds, then calls Game.mainLoop for the first time
+    };
+
+    /*
+     * BLOCK: DOMContentLoaded Event Listener
+     * ----------------------------------------
+     * This line tells the browser: "When you have finished reading and
+     * building the entire HTML page, call Game.start." This guarantees
+     * that our canvas element exists before we try to use it.
+     */
+    document.addEventListener('DOMContentLoaded', Game.start); // Registers Game.start to fire automatically once the HTML is fully loaded
+
+    /*
+     * BLOCK: Game.mainLoop — The Animation Loop
+     * -------------------------------------------
+     * This function runs over and over, roughly 60 times per second.
+     * Each time it runs it: (1) wipes the canvas clean, (2) updates any
+     * moving state, (3) redraws everything, then (4) schedules itself to
+     * run again after ~16ms. This "loop" is the heartbeat of the program.
+     */
+    Game.mainLoop = function () {
+        Game.canvasContext.clearRect(0, 0, Game.canvas.width, Game.canvas.height); // Erases everything on the canvas so the previous frame doesn't bleed into the new one
+        Game.update();                                                               // Calls the update function to recalculate any changing values before drawing
+        Game.draw();                                                                 // Calls the draw function to paint the current frame onto the canvas
+        window.setTimeout(Game.mainLoop, 1000 / 60);                               // Schedules this same function to run again in ~16ms, creating the continuous loop
+    };
+
+    /*
+     * BLOCK: Game.update — State Update
+     * ------------------------------------
+     * This function is where we would change positions, speeds, or scores
+     * between frames if the cartoon were animated. Because our cartoon is
+     * completely static (nothing moves), this function is intentionally
+     * left empty.
+     */
+    Game.update = function () {
+        // Static cartoon — no values need to change between frames
+    };
+
+    /*
+     * BLOCK: Game.draw — Master Drawing Function
+     * --------------------------------------------
+     * This is the main drawing function. Every visual element in the cartoon
+     * is drawn here, in order from back to front (sky first, then objects on
+     * top). It uses the 2D context (ctx) to issue all drawing commands.
+     */
+    Game.draw = function () {
+        var ctx = Game.canvasContext; // Creates a short alias "ctx" so we don't have to type "Game.canvasContext" on every line
+        var W   = Game.canvas.width;  // Stores the canvas width (800) in W for easy reuse in calculations
+        var H   = Game.canvas.height; // Stores the canvas height (600) in H for easy reuse in calculations
+
+        /*
+         * BLOCK: Background Sky
+         * ----------------------
+         * We paint a solid light-blue rectangle across the entire canvas
+         * to represent the sky. Because this is drawn first, every other
+         * element will appear on top of it.
+         */
+        ctx.fillStyle = "#87CEEB"; // Sets the fill color to sky blue (will apply to the next filled shape)
+        ctx.fillRect(0, 0, W, H);  // Draws a filled rectangle starting at the top-left corner (0,0), spanning the full width (W) and height (H) of the canvas
+
+        /*
+         * BLOCK: Sun
+         * -----------
+         * We draw a filled yellow circle in the upper-right area of the
+         * canvas to represent the sun, then add an orange outline to give
+         * it a defined edge. arc() is the canvas method for drawing circles.
+         */
+        ctx.beginPath();                        // Starts a brand-new drawing path so this shape is independent from any previous shape
+        ctx.arc(690, 80, 55, 0, Math.PI * 2);  // Traces a full circle: center at (690, 80), radius of 55px, starting at angle 0 and going all the way around to 2π (360°)
+        ctx.fillStyle = "#FFD700";              // Sets the fill color to golden yellow for the sun's body
+        ctx.fill();                             // Fills the circle path with the current fillStyle color
+        ctx.strokeStyle = "#FFA500";            // Sets the outline color to orange for the sun's border
+        ctx.lineWidth = 2;                      // Sets the thickness of the outline to 2 pixels
+        ctx.stroke();                           // Draws the orange outline along the circle path
+
+        /*
+         * BLOCK: Ground
+         * --------------
+         * We draw a green rectangle across the bottom portion of the canvas
+         * to represent the grass/ground. It starts 450px from the top, so
+         * the sky occupies the upper 450px and the ground the lower 150px.
+         */
+        ctx.fillStyle = "#4CAF50";       // Sets the fill color to a medium green for the ground
+        ctx.fillRect(0, 450, W, H - 450); // Draws a filled rectangle starting at (0, 450), spanning full width and 150px tall (600 - 450 = 150)
+
+        /*
+         * BLOCK: Caption Text
+         * --------------------
+         * We draw a text string directly onto the canvas surface near the
+         * top. This is different from HTML text — it is a permanent part of
+         * the drawing and will be redrawn every frame along with everything else.
+         */
+        ctx.fillStyle = "#003366";                                 // Sets the fill color to dark navy blue for the caption text
+        ctx.font = "bold 26px sans-serif";                         // Sets the font style: bold weight, 26 pixels tall, using a sans-serif typeface
+        ctx.fillText("A Sunny Day in the Neighborhood", 20, 38);   // Draws the text string starting at x=20, y=38 (y is the baseline of the text)
+
+        /*
+         * BLOCK: House Body
+         * ------------------
+         * We draw the main rectangular body of the house using a tan/beige
+         * fill color, then immediately draw a darker brown outline on top of
+         * it to define the edges cleanly.
+         */
+        ctx.fillStyle = "#D2A679";            // Sets the fill color to a warm tan/beige for the house walls
+        ctx.fillRect(200, 290, 240, 160);     // Draws the house body: top-left corner at (200, 290), 240px wide and 160px tall
+        ctx.strokeStyle = "#8B5E3C";          // Sets the outline color to a darker brown for the house border
+        ctx.lineWidth = 2;                    // Sets the outline thickness to 2 pixels
+        ctx.strokeRect(200, 290, 240, 160);   // Draws just the outline (no fill) of the same rectangle to create the wall border
+
+        /*
+         * BLOCK: Roof
+         * ------------
+         * The roof is a triangle shape. Canvas has no built-in triangle
+         * method, so we build it manually using a path: we define three
+         * points with moveTo/lineTo, close the shape with closePath, then
+         * fill and stroke it.
+         */
+        ctx.beginPath();         // Starts a fresh path so the roof shape is separate from the house body
+        ctx.moveTo(180, 290);    // Lifts the "pen" and places it at the bottom-left corner of the roof (x=180, y=290)
+        ctx.lineTo(320, 160);    // Draws a line from the bottom-left corner up to the apex (peak) of the roof at (320, 160)
+        ctx.lineTo(460, 290);    // Draws a line from the apex down to the bottom-right corner of the roof at (460, 290)
+        ctx.closePath();         // Automatically draws the final line back to the starting point (180, 290), completing the triangle
+        ctx.fillStyle = "#8B0000"; // Sets the fill color to dark red for the roof
+        ctx.fill();              // Fills the triangle path with the dark red color
+        ctx.strokeStyle = "#5A0000"; // Sets the outline color to an even darker red for the roof border
+        ctx.lineWidth = 2;       // Sets the outline thickness to 2 pixels
+        ctx.stroke();            // Draws the dark outline along all three edges of the triangle
+
+        /*
+         * BLOCK: Door
+         * ------------
+         * We draw the front door of the house as a dark brown filled
+         * rectangle centered at the bottom of the house body. The door sits
+         * against the bottom edge of the house so it looks like it rests on
+         * the ground line.
+         */
+        ctx.fillStyle = "#5C3317";          // Sets the fill color to a dark wood-brown for the door
+        ctx.fillRect(295, 385, 50, 65);     // Draws the door: top-left at (295, 385), 50px wide and 65px tall
+        ctx.strokeStyle = "#3B1F0A";        // Sets the outline color to an even darker brown for the door border
+        ctx.lineWidth = 1;                  // Sets the outline thickness to 1 pixel
+        ctx.strokeRect(295, 385, 50, 65);   // Draws just the outline of the door rectangle to define its edges
+
+        /*
+         * BLOCK: Door Knob
+         * -----------------
+         * We add a small gold circle on the right side of the door to
+         * represent the door knob. Like the sun, we use arc() to draw it.
+         */
+        ctx.beginPath();                       // Starts a new path for the door knob circle
+        ctx.arc(337, 420, 4, 0, Math.PI * 2); // Traces a full circle: center at (337, 420), radius of 4px, full 360°
+        ctx.fillStyle = "#FFD700";             // Sets the fill color to gold for the door knob
+        ctx.fill();                            // Fills the small circle with the gold color
+
+        /*
+         * BLOCK: Left Window
+         * -------------------
+         * We draw the left window of the house as a light-blue filled
+         * rectangle (representing glass), outlined in dark brown. After
+         * drawing the frame, we draw two crossing lines inside it to
+         * create the look of window panes.
+         */
+        ctx.fillStyle = "#ADD8E6";          // Sets the fill color to light blue to represent the window glass
+        ctx.fillRect(220, 315, 55, 45);     // Draws the window glass: top-left at (220, 315), 55px wide and 45px tall
+        ctx.strokeStyle = "#3B1F0A";        // Sets the outline color to dark brown for the window frame
+        ctx.lineWidth = 2;                  // Sets the frame outline thickness to 2 pixels
+        ctx.strokeRect(220, 315, 55, 45);   // Draws the dark brown outline around the window rectangle
+
+        // Left window cross bars (pane dividers)
+        ctx.beginPath();               // Starts a new path to draw the two crossing lines inside the window
+        ctx.moveTo(247, 315);          // Lifts the pen to the top-center of the window (start of vertical divider)
+        ctx.lineTo(247, 360);          // Draws a vertical line downward to the bottom-center of the window
+        ctx.moveTo(220, 337);          // Lifts the pen to the left-middle of the window (start of horizontal divider)
+        ctx.lineTo(275, 337);          // Draws a horizontal line across to the right-middle of the window
+        ctx.strokeStyle = "#3B1F0A";   // Sets the cross-bar color to dark brown to match the window frame
+        ctx.lineWidth = 1;             // Sets the cross-bar thickness to 1 pixel (thinner than the frame)
+        ctx.stroke();                  // Draws both cross-bar lines onto the canvas
+
+        /*
+         * BLOCK: Right Window
+         * --------------------
+         * We draw the right window using the exact same technique as the
+         * left window — a light-blue rectangle with a dark frame and two
+         * inner cross-bar lines to create window panes.
+         */
+        ctx.fillStyle = "#ADD8E6";          // Sets the fill color to light blue for the right window glass
+        ctx.fillRect(365, 315, 55, 45);     // Draws the right window glass: top-left at (365, 315), 55px wide and 45px tall
+        ctx.strokeStyle = "#3B1F0A";        // Sets the outline color to dark brown for the right window frame
+        ctx.lineWidth = 2;                  // Sets the frame outline thickness to 2 pixels
+        ctx.strokeRect(365, 315, 55, 45);   // Draws the dark brown outline around the right window rectangle
+
+        // Right window cross bars (pane dividers)
+        ctx.beginPath();               // Starts a new path for the right window's cross-bar lines
+        ctx.moveTo(392, 315);          // Lifts the pen to the top-center of the right window (start of vertical divider)
+        ctx.lineTo(392, 360);          // Draws a vertical line downward to the bottom-center of the right window
+        ctx.moveTo(365, 337);          // Lifts the pen to the left-middle of the right window (start of horizontal divider)
+        ctx.lineTo(420, 337);          // Draws a horizontal line across to the right-middle of the right window
+        ctx.strokeStyle = "#3B1F0A";   // Sets the cross-bar color to dark brown to match the right window frame
+        ctx.lineWidth = 1;             // Sets the cross-bar thickness to 1 pixel
+        ctx.stroke();                  // Draws both cross-bar lines for the right window onto the canvas
+
+        /*
+         * BLOCK: Fence Posts — for Loop with translate
+         * ----------------------------------------------
+         * Instead of manually writing 15 separate draw commands for each
+         * fence post, we use a for loop. On each iteration, ctx.save() and
+         * ctx.translate() temporarily shift the canvas origin to the correct
+         * position for that post. We then draw the post as if it were always
+         * at (0, 0). ctx.restore() resets the origin back before the next
+         * iteration, so the translations do not stack on top of each other.
+         */
+        for (var i = 0; i < 15; i++) {              // Repeats the block inside 15 times; i starts at 0 and increases by 1 each time until it reaches 14
+            ctx.save();                              // Saves the current canvas state (including the origin position) so we can safely change it and undo it later
+            ctx.translate(490 + i * 22, 430);        // Moves the canvas origin to the position of post i: starts at x=490, shifts right by 22px for each new post
+
+            // Post body
+            ctx.fillStyle = "#F5DEB3";               // Sets the fill color to a light wheat/wood color for the fence post body
+            ctx.fillRect(-5, 0, 10, 32);             // Draws the rectangular post body: 10px wide, 32px tall, centered on the new origin (so it spans from x=-5 to x=5)
+            ctx.strokeStyle = "#8B7355";             // Sets the outline color to a darker tan for the post border
+            ctx.lineWidth = 1;                       // Sets the post outline thickness to 1 pixel
+            ctx.strokeRect(-5, 0, 10, 32);           // Draws the outline around the post body rectangle
+
+            // Pointed top
+            ctx.beginPath();       // Starts a new path to draw the triangular pointed tip of the fence post
+            ctx.moveTo(-5, 0);     // Places the pen at the bottom-left corner of the point (same x as the post's left edge, y=0 is the top of the post body)
+            ctx.lineTo(0, -10);    // Draws a line up and to the center to the tip of the point (x=0 is center, y=-10 is 10px above the post top)
+            ctx.lineTo(5, 0);      // Draws a line back down to the bottom-right corner of the point (same x as the post's right edge)
+            ctx.closePath();       // Closes the triangle by drawing a line back to the starting point (-5, 0)
+            ctx.fillStyle = "#F5DEB3"; // Sets the fill color to the same wheat color so the tip matches the post body
+            ctx.fill();            // Fills the pointed tip triangle with the wheat color
+            ctx.strokeStyle = "#8B7355"; // Sets the outline color to the same darker tan used on the post body
+            ctx.lineWidth = 1;     // Sets the tip outline thickness to 1 pixel
+            ctx.stroke();          // Draws the outline around the triangular tip
+
+            ctx.restore();         // Restores the canvas origin back to where it was before ctx.save(), undoing the translate for this post
+        }
+
+        /*
+         * BLOCK: Fence Rails
+         * -------------------
+         * We draw two horizontal lines that run across all 15 fence posts to
+         * connect them into a complete fence. These are drawn after the loop
+         * so they sit on top of the posts visually.
+         */
+        ctx.beginPath();                               // Starts a new path for the two horizontal rail lines
+        ctx.moveTo(490, 442);                          // Lifts the pen to the left end of the top rail (x=490, y=442)
+        ctx.lineTo(490 + 15 * 22, 442);               // Draws the top rail line all the way to the right end (490 + 15 posts × 22px spacing = x=820)
+        ctx.moveTo(490, 454);                          // Lifts the pen to the left end of the bottom rail (x=490, y=454, which is 12px below the top rail)
+        ctx.lineTo(490 + 15 * 22, 454);               // Draws the bottom rail line all the way to the right end at the same x=820
+        ctx.strokeStyle = "#F5DEB3";                   // Sets the rail color to the same wheat color as the fence posts
+        ctx.lineWidth = 3;                             // Sets the rail thickness to 3 pixels (thicker than the posts to look structural)
+        ctx.stroke();                                  // Draws both rail lines onto the canvas
+    };
+    </script>
+</body>
+</html>

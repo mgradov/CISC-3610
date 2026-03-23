@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lesson: How Canvas Rotation Works</title>
+    <style>
+        /* 1. PAGE LAYOUT: Using Flexbox to create a 'Dashboard' look */
+        body {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: flex-start; /* Align to top */
+            background: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px;
+            gap: 40px; /* Space between Canvas and Lesson Text */
+        }
+
+        /* 2. CANVAS STYLING: Making the 'Stage' visible */
+        canvas {
+            border: 4px solid #3498db;
+            background: #000;
+            box-shadow: 0 0 50px rgba(52, 152, 219, 0.3);
+            border-radius: 8px;
+        }
+
+        /* 3. LESSON PANEL: Styling the explanation text */
+        .lesson-panel {
+            max-width: 450px;
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #3498db;
+        }
+
+        h2 { color: #3498db; margin-top: 0; }
+        .step { margin-bottom: 20px; line-height: 1.6; }
+        .code-snippet {
+            background: #2d2d2d;
+            padding: 4px 8px;
+            color: #f1c40f;
+            font-family: monospace;
+            border-radius: 4px;
+        }
+        strong { color: #e74c3c; }
+    </style>
+</head>
+<body>
+
+    <canvas id="lessonCanvas" width="400" height="400"></canvas>
+
+    <div class="lesson-panel">
+        <h2>How it Works</h2>
+
+        <div class="step">
+            <strong>1. The Grid Shift:</strong> Instead of moving the square, we use <span class="code-snippet">translate(200, 200)</span>. This moves the "pin" (the 0,0 origin) from the corner to the center.
+        </div>
+
+        <div class="step">
+            <strong>2. The Rotation:</strong> <span class="code-snippet">rotate()</span> turns the entire coordinate grid like a steering wheel. We convert degrees to Radians using <span class="code-snippet">Math.PI / 180</span>.
+        </div>
+
+        <div class="step">
+            <strong>3. The -HalfSize Trick:</strong> By drawing the box at <span class="code-snippet">-halfSize</span>, we shift the square so its center point stays on the pin. Without this, it would spin around its corner!
+        </div>
+
+        <div class="step">
+            <strong>4. Save & Restore:</strong> We use <span class="code-snippet">save()</span> before we move things and <span class="code-snippet">restore()</span> after. This "resets" the grid so the next frame starts fresh.
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const canvas = document.getElementById('lessonCanvas');
+            const ctx = canvas.getContext('2d');
+            let angle = 0;
+
+            function draw() {
+                // Clear the previous image
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Math based on canvas size (Responsive)
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const squareSize = canvas.width / 4;
+                const halfSize = squareSize / 2;
+
+                ctx.save();
+
+                // Move the world to the center
+                ctx.translate(centerX, centerY);
+
+                // Rotate the world
+                ctx.rotate(angle * Math.PI / 180);
+
+                // Draw the square centered on the new 0,0
+                ctx.fillStyle = '#3498db';
+                ctx.fillRect(-halfSize, -halfSize, squareSize, squareSize);
+
+                // Optional: Draw the center "Pin" to show where rotation happens
+                ctx.fillStyle = "white";
+                ctx.beginPath();
+                ctx.arc(0, 0, 4, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+
+                angle += 5; // Rotate 5 degrees per frame
+                requestAnimationFrame(draw);
+            }
+
+            draw();
+        };
+    </script>
+</body>
+</html>

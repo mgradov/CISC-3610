@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Center Pivot Trick</title>
+    <style>
+        body {
+            display: flex; flex-direction: column; align-items: center;
+            background: #1a1a1a; color: white; font-family: sans-serif; padding: 20px;
+        }
+        canvas { border: 2px solid #555; background: #000; }
+        .legend { margin-top: 20px; display: flex; gap: 20px; }
+        .box { width: 15px; height: 15px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <h2>Center Pivot vs. Corner Pivot</h2>
+    <canvas id="myCanvas" width="500" height="400"></canvas>
+
+    <div class="legend">
+        <div><span class="box" style="background: rgba(52, 152, 219, 0.3); border: 1px solid #3498db;"></span> Drawing at (0,0) - Corner Pivot</div>
+        <div><span class="box" style="background: #3498db;"></span> Drawing at (-halfSize, -halfSize) - Center Pivot</div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+            let angle = 0;
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const squareSize = 100;
+                const halfSize = squareSize / 2;
+
+                // --- SCENARIO A: THE "CORNER" PIVOT (Ghost Square) ---
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(angle * Math.PI / 180);
+
+                ctx.strokeStyle = "#3498db";
+                ctx.fillStyle = "rgba(52, 152, 219, 0.2)";
+                // Drawing exactly at 0,0 makes the top-left corner the anchor
+                ctx.fillRect(0, 0, squareSize, squareSize);
+                ctx.strokeRect(0, 0, squareSize, squareSize);
+                ctx.restore();
+
+                // --- SCENARIO B: THE "CENTER" PIVOT (Solid Square) ---
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(angle * Math.PI / 180);
+
+                ctx.fillStyle = "#3498db";
+                // Drawing at -halfSize centers the box on the origin
+                ctx.fillRect(-halfSize, -halfSize, squareSize, squareSize);
+
+                // Draw the "Pin" (The 0,0 point)
+                ctx.fillStyle = "white";
+                ctx.beginPath();
+                ctx.arc(0, 0, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                angle += 1; // Slowed down for clarity
+                requestAnimationFrame(draw);
+            }
+            draw();
+        };
+    </script>
+</body>
+</html>

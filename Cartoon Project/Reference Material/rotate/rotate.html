@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Class Demo: Responsive Rotation</title>
+    <style>
+        /* The 'body' styles the whole page appearance */
+        body {
+            /* 1. LAYOUT: flex turns on 'Flexbox', which allows easy alignment */
+            display: flex;
+
+            /* 2. DIRECTION: stack elements (H2 and Canvas) vertically like a column */
+            flex-direction: column;
+
+            /* 3. ALIGNMENT: centers everything horizontally on the page */
+            align-items: center;
+
+            /* 4. COLORS: #1a1a1a is a dark charcoal; #eee is off-white */
+            background: #1a1a1a;
+            color: #eee;
+
+            /* 5. TYPOGRAPHY: sans-serif is a clean, modern font style */
+            font-family: sans-serif;
+
+            /* 6. SPACING: adds 50px of 'breathing room' at the top of the page */
+            padding-top: 50px;
+        }
+
+        /* Styling the canvas helps students see the 'edges' of the drawing area */
+        canvas {
+            /* A 2-pixel border so we can see where the canvas starts and ends */
+            border: 2px solid #555;
+
+            /* Sets the 'paper' color of the canvas to black */
+            background: #000;
+
+            /* Adds a soft shadow to make the canvas look 3D/floating */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Canvas: Responsive Rotation (5&deg; steps)</h2>
+    <canvas id="myCanvas" width="400" height="400"></canvas>
+
+    <script>
+        // window.onload ensures the HTML is fully ready before the script runs
+        window.onload = function() {
+            const canvas = document.getElementById('myCanvas');
+            const ctx = canvas.getContext('2d');
+
+            let angle = 0; // Tracks our rotation progress in degrees
+
+            function draw() {
+                // 1. Wipe the canvas clean (erases the previous frame)
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // 2. SETUP (Percentage-based math for responsiveness)
+                // Find the exact horizontal and vertical center of the canvas
+                const centerX    = canvas.width / 2;
+                const centerY    = canvas.height / 2;
+
+                // Make the square size 1/4th of the canvas width
+                const squareSize = canvas.width / 4;
+
+                // Calculate half the size. We use this to 'shift' the square.
+                const halfSize   = squareSize / 2;
+
+                // 3. TRANSFORMATIONS (Changing the 'World')
+                ctx.save(); // Save the default state (top-left origin, no rotation)
+
+                // Move the (0,0) origin point from the top-left to the center
+                ctx.translate(centerX, centerY);
+
+                // Rotate the entire coordinate grid (Degrees converted to Radians)
+                ctx.rotate(angle * Math.PI / 180);
+
+                // 4. DRAWING (Placing the square)
+                ctx.fillStyle = '#3498db'; // A bright blue color
+
+                /* THE -HALFSIZE LOGIC:
+                   By drawing the square at (-halfSize, -halfSize), we shift it
+                   backwards so that its center sits exactly on our (0,0) point.
+                   This makes it spin like a propeller instead of a swinging door.
+                */
+                ctx.fillRect(-halfSize, -halfSize, squareSize, squareSize);
+
+                // 5. CLEAN UP
+                // Return the coordinate system to normal so transformations don't 'stack'
+                ctx.restore();
+
+                // 6. ANIMATION LOGIC
+                angle += 5; // Add 5 degrees for the next frame
+
+                // Request the browser to run this 'draw' function again ASAP
+                requestAnimationFrame(draw);
+            }
+
+            // Fire the first frame to start the animation
+            draw();
+        };
+    </script>
+</body>
+</html>
