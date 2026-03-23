@@ -26,7 +26,7 @@
 <body>
     <h2>My Cartoon</h2>
     <canvas id="myCanvas" width="800" height="600"></canvas>
-    <a href="https://github.com/mgradov">Return to Portfolio</a>
+    <a href="https://github.com/mgradov/CISC-3610">Return to Portfolio</a>
 
     <script>
     "use strict"; // Tells the browser to use strict mode, which catches common coding mistakes early
@@ -41,7 +41,8 @@
      */
     var Game = {                       // Declares a variable called Game and assigns an object to it
         canvas        : undefined,     // Reserves a slot for the canvas element; we'll fill it in Game.start
-        canvasContext : undefined      // Reserves a slot for the drawing context; we'll fill it in Game.start
+        canvasContext : undefined,     // Reserves a slot for the drawing context; we'll fill it in Game.start
+        sunX          : -55            // Tracks the sun's current x position; starts at -55 so it begins fully hidden just off the left edge (the sun's radius is 55, so -55 places its far-right edge exactly at x=0)
     };
 
     /*
@@ -83,15 +84,19 @@
     };
 
     /*
-     * BLOCK: Game.update — State Update
-     * ------------------------------------
-     * This function is where we would change positions, speeds, or scores
-     * between frames if the cartoon were animated. Because our cartoon is
-     * completely static (nothing moves), this function is intentionally
-     * left empty.
+     * BLOCK: Game.update — Sun Animation State
+     * ------------------------------------------
+     * This function runs once per frame, before drawing. Its job is to
+     * advance the sun's x position by 2 pixels to the right. When the sun
+     * has moved completely off the right edge of the canvas, we reset its
+     * position back to -55 so it re-enters from the left edge, creating a
+     * seamless loop.
      */
     Game.update = function () {
-        // Static cartoon — no values need to change between frames
+        Game.sunX += 2;                              // Moves the sun 2 pixels to the right on every frame (called ~60 times per second by mainLoop)
+        if (Game.sunX > Game.canvas.width + 55) {    // Checks whether the sun's center has passed far enough past the right edge that the full circle (radius 55) is off-screen
+            Game.sunX = -55;                         // Resets the sun's x position to -55 so it re-enters from just off the left edge on the very next frame
+        }
     };
 
     /*
@@ -117,14 +122,15 @@
         ctx.fillRect(0, 0, W, H);  // Draws a filled rectangle starting at the top-left corner (0,0), spanning the full width (W) and height (H) of the canvas
 
         /*
-         * BLOCK: Sun
-         * -----------
-         * We draw a filled yellow circle in the upper-right area of the
-         * canvas to represent the sun, then add an orange outline to give
-         * it a defined edge. arc() is the canvas method for drawing circles.
+         * BLOCK: Sun (Animated)
+         * ----------------------
+         * We draw a filled yellow circle to represent the sun. Its x position
+         * is no longer hardcoded — it reads Game.sunX, which Game.update
+         * increments by 2 every frame. This makes the sun slide from left to
+         * right across the canvas and loop back endlessly.
          */
-        ctx.beginPath();                        // Starts a brand-new drawing path so this shape is independent from any previous shape
-        ctx.arc(690, 80, 55, 0, Math.PI * 2);  // Traces a full circle: center at (690, 80), radius of 55px, starting at angle 0 and going all the way around to 2π (360°)
+        ctx.beginPath();                              // Starts a brand-new drawing path so this shape is independent from any previous shape
+        ctx.arc(Game.sunX, 80, 55, 0, Math.PI * 2);  // Traces a full circle: center at (Game.sunX, 80), radius 55px, full 360° — Game.sunX changes every frame, so the circle moves
         ctx.fillStyle = "#FFD700";              // Sets the fill color to golden yellow for the sun's body
         ctx.fill();                             // Fills the circle path with the current fillStyle color
         ctx.strokeStyle = "#FFA500";            // Sets the outline color to orange for the sun's border
