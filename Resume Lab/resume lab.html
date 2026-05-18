@@ -1,0 +1,256 @@
+<!-- Document Type: Declares HTML5 to ensure modern browser rendering -->
+<!DOCTYPE html>                                                                            <!-- Tells the browser to use HTML5 parsing rules -->
+<html lang="en">                                                                           <!-- Opens root element and sets language to English for accessibility -->
+
+<!-- ============================================================ -->
+<!-- Head Section: Loads metadata and the Bootstrap stylesheet    -->
+<!-- ============================================================ -->
+<head>                                                                                     <!-- Begins document head where non-visible setup lives -->
+    <meta charset="UTF-8">                                                                 <!-- Sets character encoding so accented names render properly -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">                 <!-- Makes layout responsive on phones and tablets -->
+    <title>Cosmo Kramer - Resume</title>                                                   <!-- Shows resume owner in the browser tab for clarity -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">  <!-- Pulls Bootstrap 5.1 CSS so components like navbar/carousel work -->
+                                                                          <!-- Declares that the linked file is a stylesheet -->
+</head>                                                                                    <!-- Closes the head block -->
+
+<body>                                                                                     <!-- Begins the visible body of the resume page -->
+
+    <!-- ============================================================ -->
+    <!-- Navigation Bar: Lets the reader jump between resume sections -->
+    <!-- ============================================================ -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">                   <!-- Creates dark, collapsible navbar that sticks to the top while scrolling -->
+        <div class="container-fluid">                                                      <!-- Provides full-width padded container required by Bootstrap navbar -->
+            <a class="navbar-brand" href="#top">Cosmo Kramer</a>                           <!-- Displays the resume owner's name as the brand link to the page top -->
+            <!-- Builds the hamburger button shown on small screens, Tells Bootstrap which element to collapse/expand on click, Povides accessibility hooks describing target and state, Gives screen readers a label for the toggle button -->
+            <button class="navbar-toggler" type="button"                                   
+                    data-bs-toggle="collapse" data-bs-target="#navLinks"                   
+                    aria-controls="navLinks" aria-expanded="false"                         
+                    aria-label="Toggle navigation">                                        
+                    data-bs-toggle="collapse" data-bs-target="#navLinks"                   
+                    aria-controls="navLinks" aria-expanded="false"                         
+                    aria-label="Toggle navigation">                                        
+                <span class="navbar-toggler-icon"></span>                                  <!-- Renders the three-line hamburger icon inside the toggler -->
+            </button>                                                                      <!-- Closes the toggler button -->
+            <div class="collapse navbar-collapse" id="navLinks">                           <!-- Wraps nav links so they collapse together on small screens -->
+                <ul class="navbar-nav ms-auto">                                            <!-- Holds the nav items and pushes them to the right with ms-auto -->
+                    <li class="nav-item"><a class="nav-link" href="#summary">Summary</a></li>          <!-- Anchor link that scrolls to the Summary section -->
+                    <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>      <!-- Anchor link that scrolls to the Education section -->
+                    <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>    <!-- Anchor link that scrolls to the Experience section -->
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>            <!-- Anchor link that scrolls to the Skills section -->
+                    <li class="nav-item"><a class="nav-link" href="#activities">Activities</a></li>    <!-- Anchor link that scrolls to the Activities section -->
+                    <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>      <!-- Anchor link that scrolls to the Portfolio carousel -->
+                </ul>                                                                      <!-- Ends the unordered list of navigation items -->
+            </div>                                                                         <!-- Ends the collapsible nav container -->
+        </div>                                                                             <!-- Ends the fluid container that holds the navbar contents -->
+    </nav>                                                                                 <!-- Ends the navigation bar element -->
+
+    <!-- ============================================================ -->
+    <!-- Header Block: Shows name and contact info at the top         -->
+    <!-- ============================================================ -->
+    <header id="top" class="container my-4">                                               <!-- Wraps the header in a centered container with vertical margin -->
+        <h1>Cosmo Kramer</h1>                                                              <!-- Displays the resume owner's full legal name as primary heading -->
+        <p class="lead mb-1">Entrepreneur &middot; Inventor &middot; Hipster Doofus</p>    <!-- Gives a brief tagline using middle dots to separate roles -->
+        <p class="mb-0">Apartment 5B, 129 West 81st Street, New York, NY 10024</p>         <!-- States the famous Upper West Side address from the show -->
+        <p class="mb-0">Phone: (212) 555-KRAM &nbsp;|&nbsp; Email: cosmo@kramerica.com</p> <!-- Lists phone and email contacts separated by a vertical pipe -->
+        <p class="mb-0">Reference available: Jerry Seinfeld (across the hall)</p>          <!-- Notes a humorous personal reference that fits the character -->
+        <hr>                                                                               <!-- Draws a horizontal rule to separate header from content sections -->
+    </header>                                                                              <!-- Ends the header block -->
+
+    <!-- ============================================================ -->
+    <!-- Summary Section: Quick pitch describing the candidate        -->
+    <!-- ============================================================ -->
+    <section id="summary" class="container my-4">                                          <!-- Defines a containerized section anchored for the Summary nav link -->
+        <h2>Summary</h2>                                                                   <!-- Labels the section so the reader knows its purpose -->
+        <p>                                                                                <!-- Opens a paragraph holding the elevator-pitch summary -->
+            Eccentric, self-made entrepreneur and serial inventor with three decades       <!-- Describes Kramer's general professional identity -->
+            of unconventional problem solving in New York City. Known for bold ideas,      <!-- Highlights his creativity and geographic focus -->
+            tireless networking, and an unshakable belief that "giddy-up" is a valid       <!-- Adds character-specific flavor referencing his catchphrase -->
+            business strategy. Founder of Kramerica Industries and frequent collaborator   <!-- Mentions his fictional company to ground his work history -->
+            with neighbors, comedians, and lawyers named Jackie Chiles.                    <!-- References well-known recurring characters from the show -->
+        </p>                                                                               <!-- Closes the summary paragraph -->
+    </section>                                                                             <!-- Ends the Summary section -->
+
+    <!-- ============================================================ -->
+    <!-- Education Section: Lists schools and informal training       -->
+    <!-- ============================================================ -->
+    <section id="education" class="container my-4">                                        <!-- Defines a containerized section for educational background -->
+        <h2>Education</h2>                                                                 <!-- Labels the section with a clear heading -->
+        <ul>                                                                               <!-- Begins an unordered list to itemize each credential -->
+            <li>                                                                           <!-- Begins the first credential list item -->
+                <strong>Anderson High School</strong>, New York, NY &mdash; Graduated      <!-- Names the high school and signals completion with em dash -->
+                <br>Class Treasurer; voted "Most Likely to Burst Through a Door"           <!-- Adds a fun honor consistent with Kramer's entrance habit -->
+            </li>                                                                          <!-- Ends the first credential -->
+            <li>                                                                           <!-- Begins the second credential list item -->
+                <strong>Kramerica Institute of Self-Study</strong> &mdash; Continuous      <!-- Names a fictional self-study program he attends indefinitely -->
+                <br>Coursework: Coffee Table Design, Karate (with children), Improv Golf   <!-- Lists humorous subject areas matching his on-screen interests -->
+            </li>                                                                          <!-- Ends the second credential -->
+            <li>                                                                           <!-- Begins the third credential list item -->
+                <strong>H&amp;H Bagels Apprenticeship</strong> &mdash; 1984 to 1996        <!-- References his real on-show job during a long bagel strike -->
+                <br>Twelve-year strike participant; returned to active rolling duty        <!-- Notes the famous 12-year strike from the show -->
+            </li>                                                                          <!-- Ends the third credential -->
+        </ul>                                                                              <!-- Ends the unordered education list -->
+    </section>                                                                             <!-- Ends the Education section -->
+
+    <!-- ============================================================ -->
+    <!-- Experience Section: Itemizes prior roles and dates           -->
+    <!-- ============================================================ -->
+    <section id="experience" class="container my-4">                                       <!-- Defines a containerized section for work history -->
+        <h2>Experience</h2>                                                                <!-- Labels the section so the reader can identify it -->
+
+        <h5 class="mb-0">Founder &amp; CEO &mdash; Kramerica Industries</h5>               <!-- Names the role and company on a tight heading -->
+        <p class="text-muted mb-1">1989 &ndash; Present, New York, NY</p>                  <!-- Provides employment dates in muted style for hierarchy -->
+        <ul>                                                                               <!-- Begins responsibilities list for this role -->
+            <li>Conceived oil-bladder tanker system to prevent maritime spills</li>        <!-- Cites his famous oil bladder pitch to Tim Whatley's client -->
+            <li>Pioneered the "rickshaw revival" pilot program in Manhattan</li>           <!-- References his rickshaw business with Newman -->
+            <li>Supervised one unpaid intern (Darin) for over six months</li>              <!-- Calls out his intern arc from the show -->
+        </ul>                                                                              <!-- Ends responsibilities list for this role -->
+
+        <h5 class="mb-0">Hand Model &mdash; Calvin Klein Underwear</h5>                    <!-- Begins next role heading, his hand modeling stint -->
+        <p class="text-muted mb-1">1993 &ndash; 1993, New York, NY</p>                     <!-- Short tenure ending after his iron-burn injury on the show -->
+        <ul>                                                                               <!-- Begins responsibilities list for the modeling role -->
+            <li>Featured in print campaign; renowned for "Michelangelo's David" hands</li> <!-- References the agent's praise of his hands -->
+            <li>Underwriter relations; maintained insurance until iron-related injury</li> <!-- Mentions the iron mishap that ended the career -->
+        </ul>                                                                              <!-- Ends responsibilities list -->
+
+        <h5 class="mb-0">Stand-In &mdash; "Murphy Brown" (CBS)</h5>                        <!-- Begins next role, his TV stand-in arc -->
+        <p class="text-muted mb-1">1992 &ndash; 1993, Los Angeles, CA</p>                  <!-- Lists tenure and city for the stand-in role -->
+        <ul>                                                                               <!-- Begins responsibilities for the stand-in role -->
+            <li>Held marks and lighting positions for principal cast members</li>          <!-- Describes standard stand-in duties to keep it resume-credible -->
+            <li>Recurring on-screen role as "Steven Snell," the new secretary</li>         <!-- References his actual on-camera bit during this arc -->
+        </ul>                                                                              <!-- Ends responsibilities list -->
+
+        <h5 class="mb-0">Personal Consultant &mdash; J. Peterman Catalog</h5>              <!-- Begins next role, his Peterman consulting -->
+        <p class="text-muted mb-1">1996 &ndash; 1997, New York, NY</p>                     <!-- Provides dates matching the on-show Peterman storyline -->
+        <ul>                                                                               <!-- Begins responsibilities list for Peterman role -->
+            <li>Sold a lifetime of personal anecdotes for use in catalog copy</li>         <!-- References his famous deal selling his life stories -->
+            <li>Authored chapters anonymously published under Mr. Peterman's name</li>     <!-- Adds the ghostwriting angle from the same arc -->
+        </ul>                                                                              <!-- Ends responsibilities list -->
+    </section>                                                                             <!-- Ends the Experience section -->
+
+    <!-- ============================================================ -->
+    <!-- Skills Section: Two-column grid of core competencies         -->
+    <!-- ============================================================ -->
+    <section id="skills" class="container my-4">                                           <!-- Defines a containerized section anchored for Skills -->
+        <h2>Skills</h2>                                                                    <!-- Labels the section with a clear heading -->
+        <div class="row">                                                                  <!-- Begins a Bootstrap row to split skills across columns -->
+            <div class="col-md-6">                                                         <!-- Defines half-width column on medium and larger screens -->
+                <ul>                                                                       <!-- Begins first skills list inside the left column -->
+                    <li>Cold reading and instinctive deal-making</li>                      <!-- Captures his ability to talk anyone into anything -->
+                    <li>Advanced coffee tasting and connoisseurship</li>                   <!-- References his frequent appearances at the coffee shop -->
+                    <li>Karate sparring (intermediate, ages 8 and under)</li>              <!-- Humorously notes his children's karate class membership -->
+                    <li>Door-bursting and dramatic apartment entrances</li>                <!-- References his iconic entrance into Jerry's apartment -->
+                </ul>                                                                      <!-- Ends first skills list -->
+            </div>                                                                         <!-- Ends left column -->
+            <div class="col-md-6">                                                         <!-- Defines second half-width column for additional skills -->
+                <ul>                                                                       <!-- Begins second skills list inside the right column -->
+                    <li>Product invention and napkin-stage prototyping</li>                <!-- Captures his constant flow of half-baked inventions -->
+                    <li>Improvisational golf course design and play</li>                   <!-- References his golfing storylines with Steinbrenner -->
+                    <li>Networking across Manhattan, Queens, and Long Island</li>          <!-- Highlights his vast informal social network -->
+                    <li>Conversational fluency in produce, poultry, and pretzels</li>      <!-- Humorous nod to his many food-related schemes -->
+                </ul>                                                                      <!-- Ends second skills list -->
+            </div>                                                                         <!-- Ends right column -->
+        </div>                                                                             <!-- Ends the Bootstrap row -->
+    </section>                                                                             <!-- Ends the Skills section -->
+
+    <!-- ============================================================ -->
+    <!-- Activities & Honors Section: Awards and side achievements    -->
+    <!-- ============================================================ -->
+    <section id="activities" class="container my-4">                                       <!-- Defines a containerized section for activities and honors -->
+        <h2>Activities &amp; Honors</h2>                                                   <!-- Labels the section with an HTML ampersand entity -->
+        <ul>                                                                               <!-- Begins an unordered list of accolades -->
+            <li>AIDS Walk New York Marshal &mdash; refused the ribbon, walked anyway</li>  <!-- References the famous AIDS walk ribbon storyline -->
+            <li>Friars Club Inductee &mdash; status briefly suspended over jacket loan</li><!-- References his jacket-loss arc with the Friars Club -->
+            <li>Featured in "Real Peterman" autobiographical excerpts (1997)</li>          <!-- Ties back to the Peterman ghostwriting role above -->
+            <li>Holder of Apartment 5B occupancy since 1979 (in good standing)</li>        <!-- Notes long tenancy in his iconic apartment -->
+            <li>Founder &mdash; The Coffee Table Book About Coffee Tables Foundation</li>  <!-- References the coffee-table-book product from the show -->
+        </ul>                                                                              <!-- Ends the activities list -->
+    </section>                                                                             <!-- Ends the Activities section -->
+
+    <!-- ============================================================ -->
+    <!-- Portfolio Section: Bootstrap carousel showcasing projects    -->
+    <!-- ============================================================ -->
+    <section id="portfolio" class="container my-4">                                        <!-- Defines a containerized section anchored for the Portfolio -->
+        <h2>Portfolio</h2>                                                                 <!-- Labels the section with a clear heading -->
+        <p>Selected ventures from a long career of inspired ideas:</p>                     <!-- Introduces the carousel with a short framing sentence -->
+
+        <div id="kramerCarousel" class="carousel slide" data-bs-ride="carousel">           <!-- Creates the carousel root with auto-cycling enabled by data attribute -->
+
+            <div class="carousel-indicators">                                              <!-- Begins the row of clickable indicator dots beneath the slides -->
+                <button type="button" data-bs-target="#kramerCarousel"                     
+                        data-bs-slide-to="0" class="active"                                
+                        aria-current="true" aria-label="Slide 1"></button>                 
+                <button type="button" data-bs-target="#kramerCarousel"                     
+                        data-bs-slide-to="1" aria-label="Slide 2"></button>                
+                <button type="button" data-bs-target="#kramerCarousel"                     
+                        data-bs-slide-to="2" aria-label="Slide 3"></button>                
+                <button type="button" data-bs-target="#kramerCarousel"                     
+                        data-bs-slide-to="3" aria-label="Slide 4"></button>                
+            </div>                                                                         <!-- Ends the carousel indicators row -->
+
+            <div class="carousel-inner bg-light">                                          <!-- Wraps the actual slide content with a light background -->
+
+                <div class="carousel-item active">                                         <!-- First slide; marked active so it renders on first load -->
+                    <div class="p-5 text-center">                                          <!-- Adds large padding and centers slide text content -->
+                        <h3>The Mansiere (a.k.a. "The Bro")</h3>                           <!-- Names the famous bra-for-men invention -->
+                        <p class="mb-0">                                                   <!-- Begins description paragraph with no bottom margin -->
+                            Co-invented support garment addressing an underserved market   <!-- Summarizes the product without echoing the title -->
+                            of mature gentlemen requiring lift and separation. Prototype   <!-- Describes target customer and prototype stage -->
+                            tested with Frank Costanza; manufacturing pending investors.   <!-- References Frank as collaborator in the storyline -->
+                        </p>                                                               <!-- Closes the description paragraph -->
+                    </div>                                                                 <!-- Closes the slide content wrapper -->
+                </div>                                                                     <!-- Closes the first carousel item -->
+
+                <div class="carousel-item">                                                <!-- Second slide; not active by default -->
+                    <div class="p-5 text-center">                                          <!-- Adds large padding and centers slide text content -->
+                        <h3>The Coffee Table Book About Coffee Tables</h3>                 <!-- Names his published-and-furniture hybrid project -->
+                        <p class="mb-0">                                                   <!-- Begins description paragraph with no bottom margin -->
+                            Hardcover photography book that unfolds into a functional      <!-- Describes the convertible-furniture concept -->
+                            coffee table. Optional add-on legs sold separately. Featured   <!-- Mentions the legs accessory mentioned on the show -->
+                            on Regis &amp; Kathie Lee; print run sold out at retail.       <!-- References his real promotional appearance from the show -->
+                        </p>                                                               <!-- Closes the description paragraph -->
+                    </div>                                                                 <!-- Closes the slide content wrapper -->
+                </div>                                                                     <!-- Closes the second carousel item -->
+
+                <div class="carousel-item">                                                <!-- Third slide; not active by default -->
+                    <div class="p-5 text-center">                                          <!-- Adds large padding and centers slide text content -->
+                        <h3>Make-Your-Own-Pie Pizzeria</h3>                                <!-- Names the participatory pizza restaurant concept -->
+                        <p class="mb-0">                                                   <!-- Begins description paragraph with no bottom margin -->
+                            Restaurant concept allowing patrons to assemble personal       <!-- Describes the customer-driven business model -->
+                            pizzas at the counter using house dough and toppings. Joint    <!-- Notes the do-it-yourself preparation experience -->
+                            venture pitch developed with Mr. Steinbrenner and Poppie.      <!-- References the storyline collaborators from the show -->
+                        </p>                                                               <!-- Closes the description paragraph -->
+                    </div>                                                                 <!-- Closes the slide content wrapper -->
+                </div>                                                                     <!-- Closes the third carousel item -->
+
+                <div class="carousel-item">                                                <!-- Fourth slide; not active by default -->
+                    <div class="p-5 text-center">                                          <!-- Adds large padding and centers slide text content -->
+                        <h3>Michigan Bottle Deposit Initiative</h3>                        <!-- Names the recycling-arbitrage scheme he pursued with Newman -->
+                        <p class="mb-0">                                                   <!-- Begins description paragraph with no bottom margin -->
+                            Cross-state logistics venture relocating five-cent New York    <!-- Describes the inter-state pricing exploit -->
+                            cans and bottles to ten-cent Michigan redemption centers.      <!-- Explains the price differential underpinning the plan -->
+                            Fleet partner: Newman (USPS mail truck, off-hours).            <!-- References Newman as logistics partner per the show -->
+                        </p>                                                               <!-- Closes the description paragraph -->
+                    </div>                                                                 <!-- Closes the slide content wrapper -->
+                </div>                                                                     <!-- Closes the fourth carousel item -->
+
+            </div>                                                                         <!-- Closes the carousel inner container -->
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#kramerCarousel" data-bs-slide="prev"> <!-- Builds the left-side previous-slide control button, Wires the button to move the carousel backward by one slide -->
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>        <!-- Renders the chevron icon for the previous control -->
+                <span class="visually-hidden">Previous</span>                               <!-- Provides screen-reader-only label for the control -->
+            </button>                                                                      <!-- Closes the previous-slide control -->
+            <button class="carousel-control-next" type="button" data-bs-target="#kramerCarousel" data-bs-slide="next"> <!-- Builds the right-side next-slide control button, Wires the button to advance the carousel forward by one slide -->
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>        <!-- Renders the chevron icon for the next control -->
+                <span class="visually-hidden">Next</span>                                  <!-- Provides screen-reader-only label for the control -->
+            </button>                                                                      <!-- Closes the next-slide control -->
+
+        </div>                                                                             <!-- Closes the entire carousel component -->
+    </section>                                                                             <!-- Ends the Portfolio section -->
+
+    <!-- ============================================================ -->
+    <!-- Footer Script: Loads Bootstrap JS bundle for interactivity   -->
+    <!-- ============================================================ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>  <!-- Loads Bootstrap JS so the navbar toggle and carousel controls function -->
+
+</body>                                                                                    <!-- Closes the visible body of the document -->
+</html>                                                                                    <!-- Closes the root HTML element -->

@@ -1,0 +1,63 @@
+<!DOCTYPE html>                                                                                          <!-- Declares HTML5 doctype so browser uses modern rendering -->
+<html>                                                                                                   <!-- Opens root element to wrap the whole document -->
+<head>                                                                                                   <!-- Opens head to hold metadata for the page -->
+    <title>Multimedia Dictionary</title>                                                                 <!-- Sets browser tab title to identify the app -->
+</head>                                                                                                  <!-- Closes head section -->
+<body>                                                                                                   <!-- Opens body to hold all visible page content -->
+
+<!-- --- Page Heading: Labels the app for the user --- -->
+<h1>Multimedia Dictionary</h1>                                                                           <!-- Displays main title so users know what the app is -->
+
+<!-- --- Word Section: Dropdown of words plus a button to speak the selected word --- -->
+<h3>Pick a word:</h3>                                                                                    <!-- Shows section label to instruct the user -->
+<select id="wordMenu">                                                                                   <!-- Creates dropdown menu with id used by JS to find it -->
+    <option value="">--Select--</option>                                                                 <!-- Placeholder at index 0 used by the gatekeeper check -->
+    <option value="apple" data-sentence="An apple is a red fruit that grows on trees.">apple</option>    <!-- Word option storing matching sentence in data-* attribute -->
+    <option value="dog" data-sentence="The dog wagged its tail when it saw me.">dog</option>             <!-- Word option storing matching sentence in data-* attribute -->
+    <option value="ball" data-sentence="She kicked the ball across the field.">ball</option>             <!-- Word option storing matching sentence in data-* attribute -->
+    <option value="sun" data-sentence="The sun is shining brightly today.">sun</option>                  <!-- Word option storing matching sentence in data-* attribute -->
+    <option value="tree" data-sentence="A bird built its nest in the tall tree.">tree</option>           <!-- Word option storing matching sentence in data-* attribute -->
+</select>                                                                                                <!-- Closes dropdown menu -->
+<button onclick="speakWord()">Speak Word</button>                                                        <!-- Button that triggers speakWord on click to read the chosen word aloud -->
+
+<!-- --- Sentence Section: Read-only textarea that shows the sentence plus a button to speak it --- -->
+<h3>Sentence:</h3>                                                                                       <!-- Shows section label so user knows what appears below -->
+<textarea id="sentenceBox" readonly rows="3" cols="50"></textarea>                                       <!-- Read-only display box filled by JS so user cannot edit it -->
+<button onclick="speakSentence()">Speak Sentence</button>                                                <!-- Button that triggers speakSentence to read the displayed sentence -->
+
+<script>                                                                                                 <!-- Opens script block so the browser runs the JavaScript below -->
+
+    // --- Speech Engine: Reusable helper that turns a text string into spoken audio ---
+    function speak(textToSay) {                                                                          // Defines function taking text param so any caller can speak any string
+        const message = new SpeechSynthesisUtterance(textToSay);                                         // Wraps text in an utterance object the speech API can play
+        message.pitch = 1.2;                                                                             // Raises pitch slightly to make voice friendlier for early learners
+        message.rate = 1.0;                                                                              // Sets normal speed so words stay clear and easy to follow
+        window.speechSynthesis.speak(message);                                                           // Sends utterance to the browser engine to produce audio output
+    }                                                                                                    // Closes speak function
+
+    // --- Word Handler: Validates selection, fills sentence box, and speaks the word ---
+    function speakWord() {                                                                               // Defines handler called by the Speak Word button's onclick
+        const menu = document.getElementById("wordMenu");                                                // Grabs dropdown so we can read which option is selected
+        const box = document.getElementById("sentenceBox");                                              // Grabs textarea so we can write the sentence into it
+
+        if (menu.selectedIndex > 0) {                                                                    // Gatekeeper: only run if user picked a real word, not the --Select-- placeholder
+            const selectedOption = menu.options[menu.selectedIndex];                                     // Drills down to the exact option element the user chose
+            box.value = selectedOption.dataset.sentence;                                                 // Pulls sentence from data-sentence and shows it in the textarea
+            speak(menu.value);                                                                           // Passes the word string to the engine so it gets spoken aloud
+        } else {                                                                                         // Runs when user has not made a real selection yet
+            box.value = "";                                                                              // Clears textarea so no stale sentence stays on screen
+        }                                                                                                // Closes if/else branch
+    }                                                                                                    // Closes speakWord function
+
+    // --- Sentence Handler: Speaks whatever sentence is currently shown in the textarea ---
+    function speakSentence() {                                                                           // Defines handler called by the Speak Sentence button's onclick
+        const box = document.getElementById("sentenceBox");                                              // Grabs textarea so we can read the sentence it currently shows
+        if (box.value != "") {                                                                           // Guards against speaking when no word has been picked yet
+            speak(box.value);                                                                            // Sends the displayed sentence to the engine to be spoken
+        }                                                                                                // Closes if branch
+    }                                                                                                    // Closes speakSentence function
+
+</script>                                                                                                <!-- Closes script block -->
+
+</body>                                                                                                  <!-- Closes body section -->
+</html>                                                                                                  <!-- Closes root element ending the document -->

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programmer Documentation</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Programmer Documentation</h1>
+  </header>
+
+  <main>
+    <h2>Project files</h2>
+    <ul>
+      <li><code>Animal Page.html</code> &mdash; the main app page</li>
+      <li><code>style.css</code> &mdash; styling</li>
+      <li><code>app.js</code> &mdash; loads the data, builds the menu, displays animals, registers the service worker</li>
+      <li><code>data.json</code> &mdash; the dataset</li>
+      <li><code>manifest.json</code> &mdash; PWA manifest (name, icons, install settings)</li>
+      <li><code>service-worker.js</code> &mdash; offline caching</li>
+      <li><code>animal images/app icon.webp</code> &mdash; app icon</li>
+      <li><code>Main Page.html</code>, <code>user-docs.html</code>, <code>dev-docs.html</code> &mdash; supporting pages</li>
+    </ul>
+
+    <h2>How to change the dataset</h2>
+    <p>The app reads everything from <code>data.json</code>. To swap in your own dataset (for example, planets or musical instruments), edit that file.</p>
+
+    <p>The structure looks like this:</p>
+<pre>{
+  "animals": [
+    {
+      "title": "African Elephant",
+      "habitat": "Savannas of Africa",
+      "description": "The African elephant is...",
+      "image": "https://example.com/elephant.jpg",
+      "audio": ""
+    },
+    ...
+  ]
+}</pre>
+
+    <h3>Steps</h3>
+    <ol>
+      <li>Open <code>data.json</code> in a text editor.</li>
+      <li>Keep the outer object and the <code>"animals"</code> array.</li>
+      <li>Replace each entry, or add new ones, using the same fields: <code>title</code>, <code>habitat</code>, <code>description</code>, <code>image</code>, and <code>audio</code>.</li>
+      <li>Make sure the JSON is valid: commas between entries, no trailing comma after the last one, double quotes around all keys and string values.</li>
+      <li>Save the file and refresh the app.</li>
+    </ol>
+
+    <h3>Field meanings</h3>
+    <ul>
+      <li><code>title</code> &mdash; shown on the menu button and as the heading</li>
+      <li><code>habitat</code> &mdash; shown after the bold "Habitat:" label</li>
+      <li><code>description</code> &mdash; the main paragraph, also what the Listen button reads aloud when <code>audio</code> is empty</li>
+      <li><code>image</code> &mdash; URL of the image (remote URL or local file path)</li>
+      <li><code>audio</code> &mdash; URL of an audio file to play; if empty, the app uses the browser's built-in text-to-speech on <code>description</code></li>
+    </ul>
+
+    <h3>Using a different topic</h3>
+    <p>If your dataset is about a different topic, you can rename the outer key from <code>"animals"</code> to something else (like <code>"planets"</code>). If you do that, also change this line in <code>app.js</code>:</p>
+<pre>animals = data.animals;</pre>
+    <p>to match the new key, for example:</p>
+<pre>animals = data.planets;</pre>
+    <p>You can also rename the <code>habitat</code> field to fit your topic (such as <code>"location"</code> or <code>"era"</code>); if you do, update the corresponding line in <code>app.js</code> inside <code>showAnimal()</code>.</p>
+
+    <h3>Adding more files to the offline cache</h3>
+    <p>If you add new files (such as local images or audio files), list them in the <code>FILES_TO_CACHE</code> array at the top of <code>service-worker.js</code>, and bump the <code>CACHE_NAME</code> version string (for example from <code>wild-animals-v1</code> to <code>wild-animals-v2</code>) so returning users get the update.</p>
+
+    <p><a href="Main Page.html">Back to main page</a></p>
+  </main>
+</body>
+</html>

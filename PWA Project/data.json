@@ -1,0 +1,46 @@
+{
+  "animals": [
+    {
+      "title": "African Elephant",
+      "habitat": "Savannas, forests, and grasslands of sub-Saharan Africa",
+      "description": "The African elephant is the largest land animal on Earth. They live in family groups led by an older female and can eat up to 300 pounds of food in a single day.",
+      "image": "animal images/african elephant.jpg",
+      "audio": ""
+    },
+    {
+      "title": "Bengal Tiger",
+      "habitat": "Tropical and subtropical forests of India, Bangladesh, and Nepal",
+      "description": "The Bengal tiger is the most common subspecies of tiger. They are solitary hunters with orange coats and black stripes that help them blend into tall grasses.",
+      "image": "animal images/bengal tiger.jpg",
+      "audio": ""
+    },
+    {
+      "title": "Polar Bear",
+      "habitat": "Sea ice and coastal regions of the Arctic Circle",
+      "description": "Polar bears are excellent swimmers and have thick layers of fat and fur to stay warm in freezing temperatures. Their main food source is seals.",
+      "image": "animal images/polar bear.jpg",
+      "audio": ""
+    },
+    {
+      "title": "Giant Panda",
+      "habitat": "Bamboo forests in the mountains of central China",
+      "description": "Giant pandas spend most of their day eating bamboo. Even though they are classified as carnivores, about 99 percent of their diet is plants.",
+      "image": "animal images/giant panda.webp",
+      "audio": ""
+    },
+    {
+      "title": "Red Kangaroo",
+      "habitat": "Open plains and deserts across mainland Australia",
+      "description": "The red kangaroo is the largest marsupial in the world. They can hop at speeds of up to 35 miles per hour and cover 25 feet in a single jump.",
+      "image": "animal images/red kangaroo.jpg",
+      "audio": ""
+    },
+    {
+      "title": "Emperor Penguin",
+      "habitat": "Ice shelves and cold waters of Antarctica",
+      "description": "Emperor penguins are the tallest penguin species. The males huddle together to keep eggs warm during the harsh Antarctic winter while the females hunt for food.",
+      "image": "animal images/emperor penguin.jpg",
+      "audio": ""
+    }
+  ]
+}

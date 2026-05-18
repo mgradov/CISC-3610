@@ -1,0 +1,22 @@
+{
+  "name": "Wild Animals & Their Habitats",
+  "short_name": "Wild Animals",
+  "description": "Learn about wild animals and where they live.",
+  "start_url": "./Animal%20Page.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2e7d32",
+  "icons": [
+    {
+      "src": "animal images/app icon.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "animal images/app icon.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}
