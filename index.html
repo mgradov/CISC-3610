@@ -1,0 +1,171 @@
+<!-- --- Document Setup: Declares HTML5 doctype and root structure for the portfolio page --- -->
+<!DOCTYPE html>                                                                                  <!-- Declares HTML5 doctype so browsers render in standards mode -->
+<html lang="en">                                                                                 <!-- Opens root element and sets primary language to English for screen readers -->
+<head>                                                                                           <!-- Begins metadata section for non-rendered document info -->
+    <meta charset="UTF-8">                                                                       <!-- Sets character encoding to UTF-8 so special characters render correctly -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">                       <!-- Configures responsive viewport so the layout scales on mobile devices -->
+    <title>CISC 3610 — Project Portfolio</title>                                                 <!-- Sets browser tab title to identify the portfolio page -->
+
+    <!-- --- Style Block: Defines the visual presentation rules for the entire portfolio --- -->
+    <style>
+        /* --- Global Reset: Normalizes default browser spacing so layout is predictable --- */
+        * {                                                                                      /* Universal selector targets every element on the page */
+            margin: 0;                                                                           /* Strips default outer spacing to start from a clean slate */
+            padding: 0;                                                                          /* Strips default inner spacing for consistent box sizing */
+            box-sizing: border-box;                                                              /* Includes padding/border in element width to simplify sizing math */
+        }
+
+        /* --- Page Body: Establishes typography, background, and overall page tone --- */
+        body {                                                                                   /* Targets the document body container */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;      /* Uses system font stack for native look and fast load */
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);                       /* Applies dark diagonal gradient for a modern portfolio feel */
+            color: #e2e8f0;                                                                      /* Sets default text color to light slate for contrast on dark bg */
+            min-height: 100vh;                                                                   /* Ensures background fills entire viewport even with little content */
+            padding: 3rem 1.5rem;                                                                /* Adds breathing room around the page edges */
+            line-height: 1.6;                                                                    /* Increases line spacing for comfortable reading */
+        }
+
+        /* --- Container: Centers content and caps maximum width for readability --- */
+        .container {                                                                             /* Targets the main wrapper element */
+            max-width: 1100px;                                                                   /* Caps width so content doesn't stretch on wide monitors */
+            margin: 0 auto;                                                                      /* Auto horizontal margins center the container on the page */
+        }
+
+        /* --- Header: Styles the page introduction with name and tagline --- */
+        header {                                                                                 /* Targets the top intro section */
+            text-align: center;                                                                  /* Centers heading text for a balanced first impression */
+            margin-bottom: 3rem;                                                                 /* Adds space between header and project grid below */
+        }
+
+        h1 {                                                                                     /* Targets the main page heading */
+            font-size: 2.75rem;                                                                  /* Sets large size to make the title the visual focal point */
+            font-weight: 700;                                                                    /* Uses bold weight to emphasize identity */
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);                                /* Creates blue-to-purple gradient as fill source */
+            -webkit-background-clip: text;                                                       /* Clips the gradient background to the text shape (WebKit) */
+            background-clip: text;                                                               /* Standard property clipping gradient to text shape */
+            -webkit-text-fill-color: transparent;                                                /* Makes text fill transparent so the gradient shows through */
+            margin-bottom: 0.5rem;                                                               /* Adds small gap between title and subtitle */
+        }
+
+        .subtitle {                                                                              /* Targets the descriptive text under the heading */
+            font-size: 1.125rem;                                                                 /* Slightly larger than body text for readability */
+            color: #94a3b8;                                                                      /* Muted slate color to de-emphasize relative to the title */
+        }
+
+        /* --- Project Grid: Arranges project cards in a responsive multi-column layout --- */
+        .grid {                                                                                  /* Targets the grid wrapper around project cards */
+            display: grid;                                                                       /* Switches layout to CSS grid for two-dimensional arrangement */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));                         /* Auto-wraps columns at least 280px wide for responsiveness */
+            gap: 1.5rem;                                                                         /* Sets uniform spacing between grid items */
+        }
+
+        /* --- Project Card: Styles each individual project link as an interactive tile --- */
+        .card {                                                                                  /* Targets each project card anchor */
+            display: block;                                                                      /* Makes the anchor a block so it fills the grid cell */
+            background: rgba(30, 41, 59, 0.6);                                                   /* Translucent dark fill that layers over the gradient bg */
+            border: 1px solid rgba(148, 163, 184, 0.15);                                         /* Subtle border to define card edges without harshness */
+            border-radius: 12px;                                                                 /* Rounds corners for a soft modern feel */
+            padding: 1.75rem;                                                                    /* Adds internal spacing so content doesn't touch edges */
+            text-decoration: none;                                                               /* Removes default underline since the whole card is the link */
+            color: inherit;                                                                      /* Inherits body text color rather than default link blue */
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;       /* Animates hover changes smoothly over 200ms */
+        }
+
+        .card:hover {                                                                            /* Applies these rules only when cursor is over the card */
+            transform: translateY(-4px);                                                         /* Lifts the card slightly to signal interactivity */
+            border-color: rgba(96, 165, 250, 0.5);                                               /* Brightens border with blue tint on hover for feedback */
+            background: rgba(30, 41, 59, 0.9);                                                   /* Darkens card background to deepen contrast on hover */
+        }
+
+        .card-icon {                                                                             /* Targets the emoji/icon area at the top of each card */
+            font-size: 2rem;                                                                     /* Enlarges the icon so it reads as a visual anchor */
+            margin-bottom: 0.75rem;                                                              /* Adds gap between icon and project title */
+        }
+
+        .card-title {                                                                            /* Targets the project name inside each card */
+            font-size: 1.25rem;                                                                  /* Sets title slightly larger than body copy for hierarchy */
+            font-weight: 600;                                                                    /* Semi-bold weight to differentiate from description */
+            color: #f1f5f9;                                                                      /* Near-white color for strong contrast and emphasis */
+            margin-bottom: 0.5rem;                                                               /* Adds small gap between title and description */
+        }
+
+        .card-desc {                                                                             /* Targets the short project description text */
+            font-size: 0.95rem;                                                                  /* Slightly smaller than body to read as secondary text */
+            color: #94a3b8;                                                                      /* Muted slate to keep focus on the title */
+        }
+
+        /* --- Footer: Styles the closing credit line at the bottom of the page --- */
+        footer {                                                                                 /* Targets the bottom credit section */
+            text-align: center;                                                                  /* Centers the footer text horizontally */
+            margin-top: 3rem;                                                                    /* Adds space between project grid and footer */
+            color: #64748b;                                                                      /* Dim color to de-emphasize relative to main content */
+            font-size: 0.875rem;                                                                 /* Small size to mark footer as ancillary info */
+        }
+    </style>
+</head>
+
+<!-- --- Body Content: Holds all visible portfolio content rendered to the user --- -->
+<body>
+    <div class="container">                                                                      <!-- Wraps content to apply max-width and centering rules -->
+
+        <!-- --- Header Section: Introduces the portfolio with name and course context --- -->
+        <header>
+            <h1>My CISC 3610 Portfolio</h1>                                                      <!-- Primary heading announces the page purpose -->
+            <p class="subtitle">A collection of projects from Multimedia Computing</p>           <!-- Subtitle provides one-line context for the course -->
+        </header>
+
+        <!-- --- Project Grid Section: Displays all six projects as clickable cards --- -->
+        <main class="grid">
+
+            <!-- Card 1: Links to the Bootstrap framework homework -->
+            <a class="card" href="Bootstrap HW/Bootstrap Example.html">                          <!-- Anchor points to the Bootstrap project file relative to index -->
+                <div class="card-icon">🧩</div>                                                  <!-- Decorative puzzle icon evokes UI component composition -->
+                <div class="card-title">Bootstrap HW</div>                                       <!-- Names the project shown in the card -->
+                <div class="card-desc">Building a responsive layout with the Bootstrap framework.</div> <!-- Short summary describing the project focus -->
+            </a>
+
+            <!-- Card 2: Links to the SVG/canvas cartoon project -->
+            <a class="card" href="Cartoon Project/Cartoon Homework.html">                        <!-- Anchor points to the Cartoon project file -->
+                <div class="card-icon">🎨</div>                                                  <!-- Palette icon hints at visual/graphic content -->
+                <div class="card-title">Cartoon Project</div>                                    <!-- Names the project shown in the card -->
+                <div class="card-desc">An animated scene built with SVG and JavaScript.</div>   <!-- Short summary describing the project focus -->
+            </a>
+
+            <!-- Card 3: Links to the Progressive Web App project -->
+            <a class="card" href="PWA Project/Main Page.html">                                   <!-- Anchor points to the PWA project's main entry page -->
+                <div class="card-icon">📱</div>                                                  <!-- Phone icon evokes the mobile/app nature of a PWA -->
+                <div class="card-title">PWA Project</div>                                        <!-- Names the project shown in the card -->
+                <div class="card-desc">A progressive web app with offline support and manifest.</div> <!-- Short summary describing the project focus -->
+            </a>
+
+            <!-- Card 4: Links to the resume formatting lab -->
+            <a class="card" href="Resume Lab/resume lab.html">                                   <!-- Anchor points to the Resume Lab file -->
+                <div class="card-icon">📄</div>                                                  <!-- Document icon signals resume/text-based content -->
+                <div class="card-title">Resume Lab</div>                                         <!-- Names the project shown in the card -->
+                <div class="card-desc">A semantic HTML resume styled with custom CSS.</div>     <!-- Short summary describing the project focus -->
+            </a>
+
+            <!-- Card 5: Links to the HTML5 video lab homework -->
+            <a class="card" href="Video Lab HW/video lab.html">                                  <!-- Anchor points to the Video Lab file -->
+                <div class="card-icon">🎬</div>                                                  <!-- Clapperboard icon evokes video/media content -->
+                <div class="card-title">Video Lab</div>                                          <!-- Names the project shown in the card -->
+                <div class="card-desc">Embedded HTML5 video with custom controls and captions.</div> <!-- Short summary describing the project focus -->
+            </a>
+
+            <!-- Card 6: Links to the vocabulary words project -->
+            <a class="card" href="Words Project/word list project.html">                         <!-- Anchor points to the Words Project file -->
+                <div class="card-icon">📚</div>                                                  <!-- Books icon evokes vocabulary/word-list content -->
+                <div class="card-title">Words Project</div>                                      <!-- Names the project shown in the card -->
+                <div class="card-desc">An interactive vocabulary list with definitions.</div>   <!-- Short summary describing the project focus -->
+            </a>
+
+        </main>
+
+        <!-- --- Footer Section: Provides closing attribution at the bottom of the page --- -->
+        <footer>
+            <p>&copy; 2026 — Built for CISC 3610: Multimedia Computing</p>                       <!-- Credit line with copyright year and course name -->
+        </footer>
+
+    </div>
+</body>
+</html>
